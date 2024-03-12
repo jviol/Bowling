@@ -3,24 +3,22 @@ namespace BowlingApplication.Model;
 public class Frame {
     public Frame? NextFrame { get; set; }
     public int FirstRoll { get; }
-    private int? _secondRoll;
+    public int? SecondRoll { get; private set; }
 
     public Frame(int firstRoll) {
         CheckRollValue(firstRoll);
         FirstRoll = firstRoll;
     }
 
-    public int? SecondRoll {
-        get => _secondRoll;
-        set {
-            CheckRollValue(value);
-            if (FirstRoll + value > 10) {
-                throw new ArgumentException(
-                    "Second roll cannot exceed the number of pins left standing after the first roll");
-            }
 
-            _secondRoll = value;
+    public void SetSecondRoll(int value) {
+        CheckRollValue(value);
+        if (FirstRoll + value > 10) {
+            throw new ArgumentException(
+                "Second roll cannot exceed the number of pins left standing after the first roll");
         }
+
+        SecondRoll = value;
     }
 
     private static void CheckRollValue(int? value) {
@@ -45,6 +43,10 @@ public class Frame {
         }
 
         return FirstRoll + SecondRoll;
+    }
+    
+    public bool IsComplete() {
+        return FirstRoll == 10 || SecondRoll != null;
     }
     
     public override string ToString() {

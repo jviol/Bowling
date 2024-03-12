@@ -17,4 +17,14 @@ public class Game {
     public int Score() {
         return Frames.Sum(frame => frame.Score() ?? 0);
     }
+    
+    // public bool IsComplete() {
+    //     return Frames.Count == 10 && Frames.All(frame => frame.Score() is not null);
+    // }
+    //
+    // public void AddRoll(int rollValue) {
+    //     if (IsComplete())
+    //         throw new Exception("Game is already complete");
+    //     
+    // }
 }

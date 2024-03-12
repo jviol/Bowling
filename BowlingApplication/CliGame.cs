@@ -7,6 +7,7 @@ public static class CliGame {
         Game game = new Game();
         for (int i = 1; i <= 10; i++) {
             Console.Write($"Frame {i}, first roll:");
+            // TODO: Add error handling for invalid input
             int firstRoll = Convert.ToInt32(Console.ReadLine());
             Frame frame = game.AddFrame(firstRoll);
 
@@ -14,8 +15,9 @@ public static class CliGame {
                 Console.WriteLine("Strike!");
             } else {
                 Console.Write($"Frame {i}, second roll:");
+                // TODO: Add error handling for invalid input
                 int secondRoll = Convert.ToInt32(Console.ReadLine());
-                frame.SecondRoll = secondRoll;
+                frame.SetSecondRoll(secondRoll);
             }
             PrintScoreSheet(game);
         }
@@ -23,10 +25,12 @@ public static class CliGame {
         Frame lastFrame = game.Frames.Last();
         if (lastFrame.FirstRoll == 10 || lastFrame.FirstRoll + lastFrame.SecondRoll == 10) {
             Console.Write("Bonus roll:");
+            // TODO: Add error handling for invalid input
             lastFrame.NextFrame = new Frame(Convert.ToInt32(Console.ReadLine()));
             if (lastFrame.FirstRoll == 10) {
                 Console.Write("Bonus roll:");
-                lastFrame.NextFrame.SecondRoll = Convert.ToInt32(Console.ReadLine());
+                // TODO: Add error handling for invalid input
+                lastFrame.NextFrame.SetSecondRoll(Convert.ToInt32(Console.ReadLine()));
             }
             PrintScoreSheet(game);
         }
