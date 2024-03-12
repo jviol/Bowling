@@ -1,7 +1,7 @@
 namespace BowlingApplication.Model;
 
 public class Game {
-    public readonly List<Frame> Frames = new(10);
+    public readonly List<Frame> Frames = new(12);
     public Frame? CurrentFrame { get; private set; }
 
     private void AddFrame(int firstRoll) {
@@ -14,26 +14,19 @@ public class Game {
     }
     
     public int Score() {
-        return Frames.Sum(frame => frame.Score() ?? 0);
+        return Frames.Take(10).Sum(frame => frame.Score() ?? 0);
     }
     
     public bool IsComplete() {
-        return Frames.Count == 10 && Frames.All(frame => frame.Score() is not null);
+        return Frames.Count >= 10 && Frames.Take(10).All(frame => frame.Score() is not null);
     }
     
     public void AddRoll(int rollValue) {
         if (IsComplete()) {
             throw new Exception("Game is already complete");
         }
-        if (CurrentFrame == null) {
+        if (CurrentFrame == null || CurrentFrame.IsComplete()) {
             AddFrame(rollValue);
-        } else if (CurrentFrame.IsComplete()) {
-            if (Frames.Count == 10) {
-                CurrentFrame.NextFrame = new Frame(rollValue);
-                CurrentFrame = CurrentFrame.NextFrame;
-            } else {
-                AddFrame(rollValue);
-            }
         } else {
             CurrentFrame.SetSecondRoll(rollValue);
         }

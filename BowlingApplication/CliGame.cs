@@ -47,10 +47,10 @@ public static class CliGame {
     }
 
     private static void PrintScoreSheet(Game game) {
-        Console.WriteLine(new string('-', 81));
-        Console.WriteLine("Frame\t" + string.Join('\t', Enumerable.Range(1, 10)));
-        Console.WriteLine("Rolls\t" + string.Join('\t', game.Frames.Select(frame => frame.ToString())));
-        Console.WriteLine("Score\t" + string.Join('\t', game.Frames.Select(frame => frame.Score())));
-        Console.WriteLine("Total\t" + game.Score());
+        Console.WriteLine(new string('-', 100));
+        Console.WriteLine("Frame   " + string.Join("      ", Enumerable.Range(1, game.Frames.Count).Select(i => i.ToString().PadRight(2))));
+        Console.WriteLine("Rolls   " + string.Join("     ", game.Frames.Select(frame => frame.ToString())));
+        Console.WriteLine("Score   " + string.Join("      ", game.Frames.Select(frame => frame.Score()?.ToString().PadRight(2))));
+        Console.WriteLine("Total   " + game.Score());
     }
 }
