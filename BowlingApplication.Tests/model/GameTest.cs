@@ -1,3 +1,4 @@
+using System;
 using BowlingApplication.Model;
 using JetBrains.Annotations;
 using Xunit;
@@ -10,18 +11,31 @@ public class GameTest {
     [Fact]
     public void ExampleGame() {
         Game game = new Game();
-        game.AddFrame(1).SetSecondRoll(4);
-        game.AddFrame(4).SetSecondRoll(5);
-        game.AddFrame(6).SetSecondRoll(4);
-        game.AddFrame(5).SetSecondRoll(5);
-        game.AddFrame(10);
-        game.AddFrame(0).SetSecondRoll(1);
-        game.AddFrame(7).SetSecondRoll(3);
-        game.AddFrame(6).SetSecondRoll(4);
-        game.AddFrame(10);
-        Frame lastFrame = game.AddFrame(2);
-        lastFrame.SetSecondRoll(8);
-        lastFrame.NextFrame = new Frame(6);
+        game.AddRoll(1); game.AddRoll(4);
+        game.AddRoll(4); game.AddRoll(5);
+        game.AddRoll(6); game.AddRoll(4);
+        game.AddRoll(5); game.AddRoll(5);
+        game.AddRoll(10);
+        game.AddRoll(0); game.AddRoll(1);
+        game.AddRoll(7); game.AddRoll(3);
+        game.AddRoll(6); game.AddRoll(4);
+        game.AddRoll(10);
+        game.AddRoll(2); game.AddRoll(8); 
+        game.AddRoll(6);
         Assert.Equal(133, game.Score());
+        Assert.True(game.IsComplete());
+        Assert.Throws<Exception>(() => game.AddRoll(10));
+    }
+    
+    [Fact]
+    public void PerfectGame() {
+        Game game = new Game();
+        for (int i = 0; i < 10; i++) {
+            game.AddRoll(10);
+        }
+        game.AddRoll(10);
+        game.AddRoll(10);
+        Assert.Equal(300, game.Score());
+        Assert.True(game.IsComplete());
     }
 }
