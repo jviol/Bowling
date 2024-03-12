@@ -1,7 +1,7 @@
 namespace BowlingApplication.Model;
 
 public class Game {
-    public readonly List<Frame> Frames = new(12);
+    public readonly List<Frame> Frames = new(12); // 10 frames + up to 2 bonus rolls
     public Frame? CurrentFrame { get; private set; }
 
     private void AddFrame(int firstRoll) {
