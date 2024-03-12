@@ -4,14 +4,13 @@ public class Game {
     public readonly List<Frame> Frames = new(10);
     public Frame? CurrentFrame { get; private set; }
 
-    private Frame AddFrame(int firstRoll) {
+    private void AddFrame(int firstRoll) {
         Frame frame = new Frame(firstRoll);
         Frames.Add(frame);
         if (CurrentFrame != null) {
             CurrentFrame.NextFrame = frame;
         }
         CurrentFrame = frame;
-        return frame;
     }
     
     public int Score() {

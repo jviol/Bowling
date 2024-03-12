@@ -28,7 +28,6 @@ public static class CliGame {
         }
         Console.WriteLine("Game over!");
     }
-
     
     /**
      * Tries to read a roll from the console.

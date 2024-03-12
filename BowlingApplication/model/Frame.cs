@@ -2,23 +2,22 @@ namespace BowlingApplication.Model;
 
 public class Frame {
     public Frame? NextFrame { get; set; }
-    public int FirstRoll { get; }
-    public int? SecondRoll { get; private set; }
+    private readonly int _firstRoll;
+    private int? _secondRoll;
 
     public Frame(int firstRoll) {
         CheckRollValue(firstRoll);
-        FirstRoll = firstRoll;
+        _firstRoll = firstRoll;
     }
-
 
     public void SetSecondRoll(int value) {
         CheckRollValue(value);
-        if (FirstRoll + value > 10) {
+        if (_firstRoll + value > 10) {
             throw new ArgumentException(
                 "Second roll cannot exceed the number of pins left standing after the first roll");
         }
 
-        SecondRoll = value;
+        _secondRoll = value;
     }
 
     private static void CheckRollValue(int? value) {
@@ -28,34 +27,34 @@ public class Frame {
     }
 
     public int? Score() {
-        if (FirstRoll == 10) { // strike
-            int? nextRoll = NextFrame?.FirstRoll;
+        if (_firstRoll == 10) { // strike
+            int? nextRoll = NextFrame?._firstRoll;
             int? secondNextRoll = nextRoll == 10
-                ? NextFrame!.NextFrame?.FirstRoll
-                : NextFrame?.SecondRoll;
+                ? NextFrame!.NextFrame?._firstRoll
+                : NextFrame?._secondRoll;
 
             return 10 + nextRoll + secondNextRoll;
         }
 
-        if (FirstRoll + SecondRoll == 10) { // spare
-            int? nextRoll = NextFrame?.FirstRoll;
+        if (_firstRoll + _secondRoll == 10) { // spare
+            int? nextRoll = NextFrame?._firstRoll;
             return 10 + nextRoll;
         }
 
-        return FirstRoll + SecondRoll;
+        return _firstRoll + _secondRoll;
     }
     
     public bool IsComplete() {
-        return FirstRoll == 10 || SecondRoll != null;
+        return _firstRoll == 10 || _secondRoll != null;
     }
     
     public override string ToString() {
-        if (FirstRoll == 10) {
+        if (_firstRoll == 10) {
             return "X -";
         }
-        if (FirstRoll + SecondRoll == 10) {
-            return $"{FirstRoll} /";
+        if (_firstRoll + _secondRoll == 10) {
+            return $"{_firstRoll} /";
         }
-        return $"{FirstRoll} {SecondRoll}";
+        return $"{_firstRoll} {_secondRoll}";
     }
 }
